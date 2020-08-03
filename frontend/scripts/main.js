@@ -1,4 +1,4 @@
-let launches;
+let launches = [];
 
 const numberHeading = "No.".padStart(5);
 const dateHeading = "Date".padEnd(15);
@@ -21,10 +21,16 @@ function loadLaunches() {
 
 function loadPlanets() {
   // TODO: Once API is ready.
-  // const planetSelector = document.getElementById("planets-selector");
-  // planets.forEach((planet) => {
-  //   planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
-  // });
+  
+  const planets = [
+    { kepler_name: "X A-12" },
+    { kepler_name: "Beta Gamma B" }
+  ]
+
+  const planetSelector = document.getElementById("planets-selector");
+  planets.forEach((planet) => {
+    planetSelector.innerHTML += `<option value="${planet.kepler_name}">${planet.kepler_name}</option>`;
+  });
 }
 
 function abortLaunch() {
@@ -37,10 +43,23 @@ function submitLaunch() {
   const launchDate = new Date(document.getElementById("launch-day").value);
   const mission = document.getElementById("mission-name").value;
   const rocket = document.getElementById("rocket-name").value;
-  const flightNumber = launches[launches.length - 1].flightNumber + 1;
+  const flightNumber = launches[launches.length - 1]?.flightNumber + 1 || 1;
+  const customers =  ["NASA", "ZTM" ];
+
+  launches.push({
+    target,
+    launchDate: launchDate / 1000,
+    mission,
+    rocket,
+    flightNumber,
+    customers,
+    upcoming: true
+  });
 
   // TODO: Once API is ready.
   // Submit above data to launch system and reload launches.
+
+  document.getElementById("launch-success").hidden = false;
 }
 
 function listUpcoming() {
