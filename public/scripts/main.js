@@ -16,12 +16,17 @@ function initValues() {
 }
 
 function loadLaunches() {
-  // TODO: Once API is ready.
-  // Load launches and sort by flight number.
+
+  return fetch("/launches")
+    .then((launchesResponse) => launchesResponse.json())
+    .then((fetchedLaunches) => {
+      launches = fetchedLaunches.sort((a,b) => {
+        return a.flightNumber < b.flightNumber;
+      });
+    });
 }
 
 function loadPlanets() {
-  // TODO: Once API is ready.
   
   const samplePlanets = [
     { kepler_name: "X A-12" },

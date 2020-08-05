@@ -1,4 +1,4 @@
-import { join, BufReader, parse, _ } from "../deps.ts";
+import { log, join, BufReader, parse, _ } from "../deps.ts";
 
 type Planet = Record<string, string>;
 
@@ -20,10 +20,10 @@ async function loadAllExoplanetsData(): Promise<Array<Planet>> {
   return exoplanets_data;
 }
 
-async function findEarthLikeQualities(): Promise<Array<Planet>> {
-  const allExoplanets = await loadAllExoplanetsData();
+export function findEarthLikeQualities(exoplanets: Array<Planet>): Array<Planet> {
+  // const allExoplanets = await loadAllExoplanetsData();
 
-  const newEarthLike: Planet[] = (allExoplanets as Array<Planet>).filter(
+  return exoplanets.filter(
     (exoplanet) => {
       const planetaryRadius = Number(exoplanet["koi_prad"]);
       const stellarMass = Number(exoplanet["koi_smass"]);
@@ -36,7 +36,6 @@ async function findEarthLikeQualities(): Promise<Array<Planet>> {
     },
   );
 
-  return newEarthLike;
 }
 
 function showRelevantProperties(exoplanets: Array<Planet>): Array<Planet> {
@@ -68,14 +67,17 @@ function filterForNumericProperty(
 }
 
 
-planets = await showRelevantProperties(
-  await findEarthLikeQualities(),
-);
+if(!import.meta.main) {
+  planets = showRelevantProperties(
+    findEarthLikeQualities(await loadAllExoplanetsData()),
+  );
+  log.info(`${planets.length} habitable planets found!`);
+}
+
 
 export function getAllPlanets() {
   return planets;
 }
-console.log(`${planets.length} habitable planets found!`);
 
 //---------------------------------------------------------------------
 // ----------                 MAIN PROGRAM                   ----------
@@ -83,14 +85,14 @@ console.log(`${planets.length} habitable planets found!`);
 
 if (import.meta.main) {
   const newEarthLikePlanets = showRelevantProperties(
-    await findEarthLikeQualities(),
+    findEarthLikeQualities(await loadAllExoplanetsData()),
   );
 
   for (const exoplanet of newEarthLikePlanets) {
-    console.log(exoplanet);
+    log.info(exoplanet);
   }
 
-  console.log(`\n${newEarthLikePlanets.length} habitable planets found!`);
+  log.info(`\n${newEarthLikePlanets.length} habitable planets found!`);
 
   // Earth-like Exoplanet Orbital Periods
   const orbitalPeriods = filterForNumericProperty(
@@ -99,6 +101,6 @@ if (import.meta.main) {
   );
   const minPeriod = Math.min(...orbitalPeriods);
   const maxPeriod = Math.max(...orbitalPeriods);
-  console.log(`Shortest Orbital: ${minPeriod} days`);
-  console.log(`Longest Orbital: ${maxPeriod} days`);
+  log.info(`Shortest Orbital: ${minPeriod} days`);
+  log.info(`Longest Orbital: ${maxPeriod} days`);
 }
