@@ -1,4 +1,4 @@
-import { Router } from "./deps.ts";
+import { Router, log } from "./deps.ts";
 
 import * as planets from "./models/planets.ts";
 import * as launches from "./models/launches.ts";
@@ -37,6 +37,18 @@ router.get("/launches/:launch_id", (ctx: any) => {
       ctx.throw(400, "Launch doesn't exist");
     }
   }
+});
+
+router.post("/newLaunch", async (ctx: any) => {
+
+  const requestBody = await ctx.request.body();
+
+  // log.info("Has body?", await ctx.request.hasBody());
+
+  launches.createLaunch(requestBody.value);
+
+  ctx.response.body = { success: true };
+  ctx.response.status = 201;
 });
 
 export default router;

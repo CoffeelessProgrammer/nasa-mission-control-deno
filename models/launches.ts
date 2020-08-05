@@ -31,7 +31,7 @@ interface Launch_v4 {
   targetPlanet?: string;
 }
 
-interface Launch_v3 {
+export interface Launch_v3 {
   flightNumber: number;
   mission: string;
   launchDate: number;
@@ -130,6 +130,16 @@ export function getLaunchById(launchId: number) {
   }
 
   return null;
+}
+
+export function createLaunch(newLaunch: Launch_v3) {
+  const launchDefaults = {
+    upcoming: true,
+    customers: ["Zero to Mastery", "NASA"]
+  };
+
+  launches.set(newLaunch.flightNumber, Object.assign({}, launchDefaults, newLaunch));
+  log.info("launches.ts :", newLaunch);
 }
 
 // deno run --allow-net=api.spacexdata.com --allow-write mod.ts
