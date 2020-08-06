@@ -133,13 +133,21 @@ export function getLaunchById(launchId: number) {
 }
 
 export function createLaunch(newLaunch: Launch_v3) {
+  let createdLaunch: Launch_v3 = {
+    flightNumber: 0,
+    mission: "",
+    launchDate: 0,
+    rocket: "",
+    customers: [],
+    upcoming: false
+  };
+
   const launchDefaults = {
     upcoming: true,
     customers: ["Zero to Mastery", "NASA"]
   };
 
-  launches.set(newLaunch.flightNumber, Object.assign({}, launchDefaults, newLaunch));
-  log.info("launches.ts :", newLaunch);
+  launches.set(newLaunch.flightNumber, Object.assign(createdLaunch, launchDefaults, newLaunch));
 }
 
 // deno run --allow-net=api.spacexdata.com --allow-write mod.ts

@@ -41,14 +41,15 @@ router.get("/launches/:launch_id", (ctx: any) => {
 
 router.post("/newLaunch", async (ctx: any) => {
 
-  const requestBody = await ctx.request.body();
+  const requestBody: launches.Launch_v3 = await ctx.request.body().value;
 
-  // log.info("Has body?", await ctx.request.hasBody());
-
-  launches.createLaunch(requestBody.value);
-
-  ctx.response.body = { success: true };
-  ctx.response.status = 201;
+  if(requestBody) {
+    launches.createLaunch(requestBody);
+    ctx.response.body = { success: true };
+    ctx.response.status = 201;
+  } else {
+    ctx.throw(400, 'Launch not created.');
+  }
 });
 
 export default router;

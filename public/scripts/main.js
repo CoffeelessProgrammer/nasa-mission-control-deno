@@ -56,7 +56,7 @@ function submitLaunch() {
   const launchDate = new Date(document.getElementById("launch-day").value);
   const mission = document.getElementById("mission-name").value;
   const rocket = document.getElementById("rocket-name").value;
-  const flightNumber = launches[launches.length - 1]?.flightNumber + 1 || 1;
+  const flightNumber = launches[launches.length-1]?.flightNumber + 1 || 1;
   // const customers =  ["NASA", "ZTM" ];
 
   // launches.push({
