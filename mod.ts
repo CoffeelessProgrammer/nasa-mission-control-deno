@@ -79,6 +79,7 @@ app.use(async (ctx: any) => {
     "/scripts/main.js",
     "/styles/main.css",
     "/images/favicon.png",
+    "/videos/pexels-rotating-earth.mp4"
   ];
 
   if (fileWhitelist.includes(filePath)) {
