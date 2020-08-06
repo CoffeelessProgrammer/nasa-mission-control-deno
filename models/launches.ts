@@ -134,7 +134,7 @@ export function getLaunchById(launchId: number) {
 
 export function createLaunch(newLaunch: Launch_v3) {
   let createdLaunch: Launch_v3 = {
-    flightNumber: 0,
+    flightNumber: -1,
     mission: "",
     launchDate: 0,
     rocket: "",
@@ -148,6 +148,17 @@ export function createLaunch(newLaunch: Launch_v3) {
   };
 
   launches.set(newLaunch.flightNumber, Object.assign(createdLaunch, launchDefaults, newLaunch));
+}
+
+export function removeLaunch(launchId: number) {
+  const aborted: Launch_v3 | undefined = launches.get(launchId);
+
+  if(aborted) {
+    aborted.upcoming = false;
+    aborted.success = false;
+  }
+
+  return aborted;
 }
 
 // deno run --allow-net=api.spacexdata.com --allow-write mod.ts

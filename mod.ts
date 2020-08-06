@@ -95,5 +95,13 @@ if (import.meta.main) {
   });
 }
 
-// http://localhost:8000/index.html
-// deno run --allow-net --allow-read --allow-write mod.ts
+// Dev Local Cache:
+//   deno cache --reload --lock-write --lock=lock.json deps.ts
+//   deno cache --reload --lock-write --lock=test_lock.json test_deps.ts
+
+// ---------------------- Program Usage ----------------------
+//   deno cache --reload --lock=lock.json deps.ts
+//   deno cache --reload --lock=test_lock.json test_deps.ts
+//   deno test --allow-read --lock=test_lock.json
+//   deno run --allow-net --allow-read --allow-write --lock=lock.json mod.ts
+//   http://localhost:8000/index.html

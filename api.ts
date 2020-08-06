@@ -39,6 +39,18 @@ router.get("/launches/:launch_id", (ctx: any) => {
   }
 });
 
+router.delete("/launches/:launch_id", (ctx: any) => {
+  if (ctx.params?.launch_id) {
+    const result = launches.removeLaunch(Number(ctx.params.launch_id));
+
+    if (result) {
+      ctx.response.body = { success: result };
+    } else {
+      ctx.throw(400, "Launch doesn't exist");
+    }
+  }
+});
+
 router.post("/newLaunch", async (ctx: any) => {
 
   const requestBody: launches.Launch_v3 = await ctx.request.body().value;

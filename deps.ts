@@ -1,13 +1,9 @@
 // ----------------------- Standard Library -----------------------
-export * as log from "https://deno.land/std/log/mod.ts";
-export { join } from "https://deno.land/std/path/mod.ts";
-export { BufReader } from "https://deno.land/std/io/bufio.ts";
-export { parse } from "https://deno.land/std/encoding/csv.ts";
-// Testing Lib
-export {
-  assertEquals,
-  assertNotEquals,
-} from "https://deno.land/std@0.63.0/testing/asserts.ts";
+export * as log from "https://deno.land/std@0.63.0/log/mod.ts";
+export { join } from "https://deno.land/std@0.63.0/path/mod.ts";
+export { BufReader } from "https://deno.land/std@0.63.0/io/bufio.ts";
+export { parse } from "https://deno.land/std@0.63.0/encoding/csv.ts";
+
 
 // ---------------------- Third-Party Modules ----------------------
 export {
