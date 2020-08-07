@@ -5,7 +5,7 @@ type Planet = Record<string, string>;
 let planets: Array<Planet>;
 
 async function loadAllExoplanetsData(): Promise<Array<Planet>> {
-  const filepath = join("assets", "kepler_exoplanets_nasa.csv");
+  const filepath = join("src", "assets", "kepler_exoplanets_nasa.csv");
 
   const exoplanets_file = Deno.openSync(filepath);
   const bufReader = new BufReader(exoplanets_file);

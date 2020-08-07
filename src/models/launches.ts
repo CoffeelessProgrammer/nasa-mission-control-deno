@@ -102,21 +102,6 @@ async function downloadLaunchData() {
   }
 }
 
-async function postExample() {
-  const response = await fetch("https://reqres.in/api/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-    },
-    body: JSON.stringify({
-      name: "Elon Musk",
-      job: "billionaire",
-    }),
-  });
-
-  return response.json();
-}
-
 await downloadLaunchData();
 log.info(`Downloaded data for ${launches.size} SpaceX launches.`);
 
@@ -132,7 +117,7 @@ export function getLaunchById(launchId: number) {
   return null;
 }
 
-export function createLaunch(newLaunch: Launch_v3) {
+export function scheduleLaunch(newLaunch: Launch_v3) {
   let createdLaunch: Launch_v3 = {
     flightNumber: -1,
     mission: "",
@@ -150,7 +135,7 @@ export function createLaunch(newLaunch: Launch_v3) {
   launches.set(newLaunch.flightNumber, Object.assign(createdLaunch, launchDefaults, newLaunch));
 }
 
-export function removeLaunch(launchId: number) {
+export function abortLaunch(launchId: number) {
   const aborted: Launch_v3 | undefined = launches.get(launchId);
 
   if(aborted) {

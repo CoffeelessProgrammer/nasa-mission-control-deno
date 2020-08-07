@@ -41,7 +41,7 @@ router.get("/launches/:launch_id", (ctx: any) => {
 
 router.delete("/launches/:launch_id", (ctx: any) => {
   if (ctx.params?.launch_id) {
-    const result = launches.removeLaunch(Number(ctx.params.launch_id));
+    const result = launches.abortLaunch(Number(ctx.params.launch_id));
 
     if (result) {
       ctx.response.body = { success: result };
@@ -51,12 +51,12 @@ router.delete("/launches/:launch_id", (ctx: any) => {
   }
 });
 
-router.post("/newLaunch", async (ctx: any) => {
+router.post("/launches", async (ctx: any) => {
 
   const requestBody: launches.Launch_v3 = await ctx.request.body().value;
 
   if(requestBody) {
-    launches.createLaunch(requestBody);
+    launches.scheduleLaunch(requestBody);
     ctx.response.body = { success: true };
     ctx.response.status = 201;
   } else {

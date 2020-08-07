@@ -76,10 +76,10 @@ function submitLaunch() {
 
   // TODO: Once API is ready. [COMPLETE]
 
-  return fetch("/newLaunch", {
+  return fetch("/launches", {
     method: "post",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json; charset=UTF-8"
     },
     body: JSON.stringify({
       flightNumber,

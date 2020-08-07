@@ -71,6 +71,7 @@ app.use(async (ctx: any, next: any) => {
 app.use(api.routes());
 app.use(api.allowedMethods());
 
+// Files allowed to be served by API
 app.use(async (ctx: any) => {
   const filePath = ctx.request.url.pathname;
 
@@ -89,6 +90,7 @@ app.use(async (ctx: any) => {
   }
 });
 
+// If mod.ts is run as root of program, set app to listen on specified port.
 if (import.meta.main) {
   log.info(`Starting server on port ${PORT}.....`);
   await app.listen({
@@ -97,12 +99,12 @@ if (import.meta.main) {
 }
 
 // Dev Local Cache:
-//   deno cache --reload --lock-write --lock=lock.json deps.ts
-//   deno cache --reload --lock-write --lock=test_lock.json test_deps.ts
+//   deno cache --reload --lock-write --lock=lock.json src/deps.ts
+//   deno cache --reload --lock-write --lock=test_lock.json src/test_deps.ts
 
 // ---------------------- Program Usage ----------------------
-//   deno cache --reload --lock=lock.json deps.ts
-//   deno cache --reload --lock=test_lock.json test_deps.ts
+//   deno cache --reload --lock=lock.json src/deps.ts
+//   deno cache --reload --lock=test_lock.json src/test_deps.ts
 //   deno test --allow-read --lock=test_lock.json
-//   deno run --allow-net --allow-read --allow-write --lock=lock.json mod.ts
+//   deno run --allow-net --allow-read --allow-write --lock=lock.json src/mod.ts
 //   http://localhost:8000/index.html
